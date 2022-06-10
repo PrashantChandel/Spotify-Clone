@@ -1,20 +1,61 @@
-.App {
+/* .App {
   text-align: center;
+} */
+
+.App-link {
+  color: #61dafb;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.search {
+  width: 50%;
+  padding: 10px 5px;
+  font-size: medium;
+  color: rgb(31, 37, 43);
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px #282c34;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.autocomplete {
+  width: 50%;
+  height: 10em;
+  overflow-y: scroll;
+  background: #ffffff;
+  box-shadow: 0px 4px 8px #282c34;
 }
-
+.autocompleteItems {
+  border-bottom: 1px solid rgb(204, 204, 204);
+  padding: 10px 5px;
+  cursor: pointer;
+  color: rgb(3, 0, 43);
+  font-weight: bold;
+  vertical-align: middle;
+}
+.autoItemsName {
+  justify-content: center;
+}
+.btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 4px #282c34;
+}
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0px 4px 8px #282c34;
+}
 .App-header {
-  background-color: #282c34;
+  background-color: #7e7e7e;
+  /* ff9292 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,16 +64,61 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.Thumbnail {
+  height: 50px;
+  width: 50px;
+  padding-right: 35px;
+  padding-left: 5px;
 }
+.track_container{
+  width: 70%;
+  margin-top: 10px;
+  background-color: #5c576386;
+  max-height: 75vh;
+  min-height: 75vh;
+  overflow-y: scroll;
+  
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+}
+.track{
+  justify-content: center;
+  border-bottom: 1px solid#b4b3b385;
+  padding: 10px 10px;
+  padding-left: 30px;
+}
+.track:hover{
+  cursor: pointer;
+}
+.album_name{
+  color: beige;
+  padding-bottom: 3px;
+  border-bottom: 1px solid beige;
+  width:30%;
+  text-align: center;
+}
+.title{
+  color: beige;
+  padding: 10px ;
+  margin-left: 40px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid beige;
+
+  width: 100%;
+  text-align: left;
+}
+.artist_info{
+
+  text-align: center;
+}
+.artist_img{
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  margin: 10px 10px 10px ;
+  border-radius: 50%;
+  padding: 5px;
+}
+.artist_name{
+  width: 100%;
+  vertical-align: middle;
 }

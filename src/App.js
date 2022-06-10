@@ -1,22 +1,23 @@
-import logo from './logo.svg';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import Authorize from './Authorize';
+import Search from './Search';
+import Tracks from './Tracks';
+import Albums from './Albums';
+
 
 function App() {
+
+  // let token = window.localStorage.getItem("token");
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1> Spotify Artist Search</h1>
+        <Routes >
+          <Route exact path="/" element={<> <Authorize /> <Search /></>} />
+          <Route exact path="/albums" element={<Albums />} />
+          <Route exact path="/albums/tracks" element={<Tracks />} />
+        </Routes>
       </header>
     </div>
   );
