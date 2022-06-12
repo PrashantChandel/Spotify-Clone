@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './index.css'
 import axios from 'axios'
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 function Card(props) {
 

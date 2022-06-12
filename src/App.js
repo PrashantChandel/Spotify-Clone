@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1> Spotify Artist Search</h1>
+        <h1 className='App_title'> Spotify Artist Search</h1>
         <Routes >
           <Route exact path="/" element={<> <Authorize /> <Search /></>} />
           <Route exact path="/albums" element={<Albums />} />

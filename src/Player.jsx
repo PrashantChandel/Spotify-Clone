@@ -12,6 +12,8 @@ function Player() {
         <SpotifyPlayer
             token={token}
             uris={['spotify:artist:6HQYnRM4OzToCYPpVBInuU']}
+
+            
         />
 
     )

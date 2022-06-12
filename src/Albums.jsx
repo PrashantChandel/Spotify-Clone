@@ -21,12 +21,16 @@ function Albums(props) {
             <div className='artist_info'>
             <img  className='artist_img'  src={artist_image.artist_image} alt="Artist" />
             <div className='artist_name'>{artist_name.artist_name}</div>
+
             <div>Followers: {info.followers.total}</div>
+
             <div>Genres: {info.genres.map((el,id) => 
             <span key={id}>{el} | </span>
             )}</div>
             </div>
+            
             <div className='title'>Albums</div>
+
             <div className='container'>
                 {albums?.length > 0 &&
                     albums.map((element, index) =>

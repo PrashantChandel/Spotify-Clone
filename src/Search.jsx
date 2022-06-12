@@ -2,8 +2,8 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import useDebounced from "./Debounce";
 import AutocompleteItems from "./AutocompleteItems";
-import { Navigate, useNavigate } from "react-router-dom";
-function Search(props) {
+import { useNavigate } from "react-router-dom";
+function Search() {
 
     const [search, setSearch] = useState([])
     const [albums, setAlbums] = useState([])
@@ -11,9 +11,10 @@ function Search(props) {
     let navigate = useNavigate();
 
     const handleChange = async (e) => {
-        // console.log(token)
         e.preventDefault();
+        // console.log(token)
         const searchValue = e.target.value;
+        console.log(searchValue)
         if (searchValue !== "") {
             console.log("here")
             try {
@@ -39,7 +40,9 @@ function Search(props) {
         }
     }
     const searchAlbums = async (e, idd, artist_image, artist_name) => {
+
         e.preventDefault()
+        console.log(idd);
         try {
 
             const final_artist_info = await axios.get(`https://api.spotify.com/v1/artists/${idd}`, {
@@ -74,10 +77,10 @@ function Search(props) {
         }
 
     }
-    const optimizedSearch = useCallback(useDebounced(handleChange), [])
+    const DebouncedSearch = useCallback(useDebounced(handleChange), [])
     return (
         <>
-            {token ? <input type={'text'} name={'search'} placeholder={'Search Artists...'} className={'search'} onChange={optimizedSearch}>
+            {token ? <input type={'text'} name={'search'} placeholder={'Search Artists...'} className={'search'} onChange={DebouncedSearch}>
             </input> : <br></br>
             }
             {search?.length > 0 &&

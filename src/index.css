@@ -11,12 +11,14 @@
   transition: 0.3s;
   background-color: azure;
   color: rgb(31, 37, 43);
-  font-weight: bold;
+  font-weight:bold;
+  font-size: medium;
   margin: 0.25rem;
 }
 
 .Card:hover {
   box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 .imgClass {
   height: 300px;
