@@ -1,7 +1,6 @@
 const useDebounced = (func) => {
     let timer;
     return function (...args) {
-
         const context = this;
         if (timer) clearTimeout(timer)
         timer = setTimeout(() => {

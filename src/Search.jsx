@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import useDebounced from "./Debounce";
 import AutocompleteItems from "./AutocompleteItems";
@@ -7,13 +7,15 @@ function Search() {
 
     const [search, setSearch] = useState([])
     const [albums, setAlbums] = useState([])
+    // const [value, setValue] = useState("")
+
     let token = window.localStorage.getItem("token");
     let navigate = useNavigate();
 
-    const handleChange = async (e) => {
-        e.preventDefault();
+    const handleChange = async (value) => {
+        // e.preventDefault();
         // console.log(token)
-        const searchValue = e.target.value;
+        const searchValue = value;
         console.log(searchValue)
         if (searchValue !== "") {
             console.log("here")
@@ -67,7 +69,7 @@ function Search() {
             const info = final_artist_info.data;
 
             if (albums.length > 0 && final_artist_info.data) {
-                navigate('albums', { state: { albums: { albums }, searchTracks: {}, artist_image: { artist_image }, artist_name: { artist_name }, info: {info} } })
+                navigate('albums', { state: { albums: { albums }, searchTracks: {}, artist_image: { artist_image }, artist_name: { artist_name }, info: { info } } })
             }
             // navigate('albums', { state: { albums: { albums }, searchTracks: {} } })
         }
@@ -77,10 +79,24 @@ function Search() {
         }
 
     }
-    const DebouncedSearch = useCallback(useDebounced(handleChange), [])
+
+
+    const DebouncedSearch = useDebounced(handleChange)
+
+    //(value)=> handleChange(value
+
+    // const DebouncedSearch = useCallback(
+    //     useDebounced((value) => handleChange(value)),
+    //     []
+    // );
+
+
+
+
+
     return (
         <>
-            {token ? <input type={'text'} name={'search'} placeholder={'Search Artists...'} className={'search'} onChange={DebouncedSearch}>
+            {token ? <input type={'text'} name={'search'} placeholder={'Search Artists...'} className={'search'} onChange={(e) => DebouncedSearch(e.target.value)}>
             </input> : <br></br>
             }
             {search?.length > 0 &&
