@@ -27,6 +27,7 @@ function Authorize(props) {
 
     const logout = () => {
         setToken("")
+        window.localStorage.removeItem("user")
         window.localStorage.removeItem("token")
     }
 

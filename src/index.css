@@ -11,7 +11,7 @@
   transition: 0.3s;
   background-color: azure;
   color: rgb(31, 37, 43);
-  font-weight:bold;
+  font-weight: bold;
   font-size: medium;
   margin: 0.25rem;
 }
@@ -25,4 +25,74 @@
   width: 300px;
   object-fit: cover;
   margin: 10px 10px 10px 10px;
+}
+
+.navbar {
+  text-decoration: none;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  background-color: rgba(132, 153, 158, 0.488);
+  margin-bottom: 30px;
+}
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-nav {
+  list-style: none;
+  text-decoration: none;
+  margin: 15px;
+}
+.navbar-nav li span {
+  transition: all 0.3s ease 0s;
+}
+.navbar-nav li span:hover {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+.nav-item {
+  display: inline-block;
+  padding: 0px 20px;
+}
+.nav-link {
+  text-decoration: none;
+}
+.navbar-brand {
+  text-decoration: none;
+  padding-left: 20px;
+}
+.navbar-brand:hover{
+  transition: all 0.3s ease 0s;
+}
+.navbar-brand:hover{
+  cursor: pointer;
+  color: white;
+}
+.user_name {
+  text-align: center;
+}
+.user_box {
+  padding: 10px;
+  cursor: pointer;
+}
+.user_img {
+  height: 100px;
+  width: 100px;
+}
+.user_container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 50px;
+}
+
+
+.fav_artist_div{
+  min-width: 80%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }

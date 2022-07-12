@@ -27,6 +27,9 @@ class Authorizeclass extends Component {
     logout = () => {
         this.setState({ token: "" })
         window.localStorage.removeItem("token")
+        window.localStorage.removeItem("user")
+
+        
     }
     render() {
         return (

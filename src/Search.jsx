@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import useDebounced from "./Debounce";
 import AutocompleteItems from "./AutocompleteItems";
@@ -7,20 +7,28 @@ function Search() {
 
     const [search, setSearch] = useState([])
     const [albums, setAlbums] = useState([])
+    const [info, setInfo] = useState([])
+    const [total, setTotal] = useState(1);
+
+
+    const [token, setToken] = useState();
+    const temp = window.localStorage.getItem('token')
+
+    useEffect(() => {
+        setToken(temp)
+    }, [temp])
+
     // const [value, setValue] = useState("")
 
-    let token = window.localStorage.getItem("token");
+    // let token = window.localStorage.getItem("token");
     let navigate = useNavigate();
 
     const handleChange = async (value) => {
-        // e.preventDefault();
-        // console.log(token)
         const searchValue = value;
-        console.log(searchValue)
         if (searchValue !== "") {
             console.log("here")
             try {
-                const { data } = await axios.get("https://api.spotify.com/v1/search", {
+                const { data } = await axios.get("http://localhost:3001/artists", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -41,45 +49,101 @@ function Search() {
             setAlbums([])
         }
     }
-    const searchAlbums = async (e, idd, artist_image, artist_name) => {
+    const searchAlbums = async (e, idd, artist_image, artist_name, fav) => {
 
-        e.preventDefault()
-        console.log(idd);
-        try {
+        if (e.target.className === 'Setfavartist') {
+            if (!window.localStorage.getItem('user')) {
+                alert("Select user First")
+            }
+            else {
+                if (fav) {
+                    console.log("clearing")
+                    axios.get('http://localhost:3005/sequelize/removefavartist', {
+                        params: {
+                            user_id: window.localStorage.getItem('user'),
+                            artist_idd: idd,
+                        }
+                    })
+                        .then((res) => {
+                            console.log("Removed")
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                }
+                else {
+                    axios.get('http://localhost:3005/sequelize/setfavartist', {
+                        params: {
+                            user_id: window.localStorage.getItem('user'),
+                            artist_idd: idd,
+                            artist_name: artist_name,
+                            artist_image: artist_image
+                        }
+                    })
+                        .then((res) => {
+                            console.log("Fav set")
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
 
-            const final_artist_info = await axios.get(`https://api.spotify.com/v1/artists/${idd}`, {
+                }
+
+            }
+        }
+        else {
+            e.preventDefault()
+            console.log(idd);
+
+            axios.get(`https://api.spotify.com/v1/artists/${idd}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-            const { data } = await axios.get(`https://api.spotify.com/v1/artists/${idd}/albums`, {
+                .then((res) => {
+                    console.log("1st", res.data)
+                    setInfo(res.data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            axios.get(`https://api.spotify.com/v1/artists/${idd}/albums`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
                 params: {
-                    type: "artist"
+                    type: "artist",
+                    limit: 4,
+                    offset: 0
                 }
             })
-            // console.log(data)
-            console.log("start")
-            console.log(final_artist_info.data)
-            console.log("end")
-            setAlbums(data.items)
-            console.log(albums);
-            const info = final_artist_info.data;
+                .then((res) => {
+                    console.log("2nd", res.data)
+                    const data = res.data;
+                    setAlbums(data.items)
+                    setTotal((data.total))
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
 
-            if (albums.length > 0 && final_artist_info.data) {
-                navigate('albums', { state: { albums: { albums }, searchTracks: {}, artist_image: { artist_image }, artist_name: { artist_name }, info: { info } } })
+
+            if (albums.length > 0 && info) {
+                navigate('albums', { state: { albums: { albums }, searchTracks: {}, artist_image: { artist_image }, artist_name: { artist_name }, info: { info }, idd: { idd }, total: { total } } })
             }
-            // navigate('albums', { state: { albums: { albums }, searchTracks: {} } })
+
         }
-        catch (error) {
-            let errormsg = error.response.data.error.message;
-            console.log(errormsg)
-        }
+
+
+
 
     }
+    // useEffect(() => {
+    //     if (albums.length > 0 && info) {
+    //         navigate('albums', { state: { albums: { albums }, searchTracks: {}, artist_image: { artist_image }, artist_name: { artist_name }, info: { info }, idd: { idd }, total: { total } } })
+    //     }
 
+    // }, [info, albums])
 
     const DebouncedSearch = useDebounced(handleChange)
 
@@ -99,7 +163,7 @@ function Search() {
             {token ? <input type={'text'} name={'search'} placeholder={'Search Artists...'} className={'search'} onChange={(e) => DebouncedSearch(e.target.value)}>
             </input> : <br></br>
             }
-            {search?.length > 0 &&
+            {search?.length > 0 && token &&
                 <div className='autocomplete'>
                     {search.map((element, index) =>
                         <div key={index} className='autocompleteItems'>
